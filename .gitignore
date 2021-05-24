@@ -197,3 +197,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# custom
+client.db

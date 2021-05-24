@@ -1,5 +1,11 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+import { Database } from './logic/database'
+
+// debug delme
+const db = new Database();
+console.log(db.open());
+console.log("test");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
