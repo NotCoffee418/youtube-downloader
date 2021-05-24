@@ -5,11 +5,12 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import components (individually? is this right?)
-import HistoryEntry from './components/HistoryEntry/HistoryEntry'
+import HistoryBox from './components/HistoryBox/HistoryBox'
 
 
 function refreshHistory() {
-    const element = <HistoryEntry title="test title" />;
+
+    const element = <HistoryBox />;
     ReactDOM.render(element, $("#root").get(0));
 }
 

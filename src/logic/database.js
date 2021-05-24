@@ -55,7 +55,7 @@ export class Database {
             // Create download_history table
             this.db.prepare(
                 `CREATE TABLE download_history (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 source_url TEXT NOT NULL,
                 title TEXT NOT NULL,
                 duration_seconds INTEGER NOT NULL,
