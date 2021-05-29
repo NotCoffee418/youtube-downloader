@@ -18,6 +18,7 @@ export default class HistoryBox extends React.Component {
 
         const byteSize = require('byte-size');
         const path = require("path");
+        const fs = require("fs");
 
         return (
             <div className="row">
@@ -34,12 +35,19 @@ export default class HistoryBox extends React.Component {
                                 cSaveDir = path.dirname(r.save_path);
 
                                 // if invalidpath, also make null
-                                if (cSaveDir == '.')
+                                if (cSaveDir == '.' || !fs.existsSync(cSaveDir))
                                     cSaveDir = null;
                             }
 
-                            return (<HistoryEntry key={"historyEntry_" + i} title={r.title} savedAs={r.file_format} fileSize={sizeStr}
-                                sourceUrl={r.source_url} saveDir={cSaveDir} duration_seconds={r.duration_seconds} />)
+                            return (<HistoryEntry
+                                key={"historyEntry_" + i}
+                                title={r.title}
+                                savedAs={r.file_format}
+                                fileSize={sizeStr}
+                                sourceUrl={r.source_url}
+                                saveDir={cSaveDir}
+                                duration_seconds={r.duration_seconds}
+                            />)
                         })}
                     </div>
                 </div>

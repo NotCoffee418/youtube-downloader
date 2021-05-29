@@ -9,7 +9,6 @@ import HistoryBox from './components/HistoryBox/HistoryBox'
 
 
 function refreshHistory() {
-
     const element = <HistoryBox />;
     ReactDOM.render(element, $("#root").get(0));
 }
