@@ -6,7 +6,6 @@ export default class HistoryBox extends React.Component {
     constructor() {
         super();
         this.state = {
-            historyData: null
         };
     }
 
@@ -17,14 +16,18 @@ export default class HistoryBox extends React.Component {
             "SELECT * FROM download_history ORDER BY id DESC").all();
         client.close();
 
+        const byteSize = require('byte-size');
+
         return (
-            <div class="row">
-                <div class="col-12">
-                    <div class="list-group">
-                        {historyData.forEach(r => {
-                            <HistoryEntry title={r.title} savedAs={r.file_format} fileSize={r.filesize}
-                                sourceUrl={r.source_url} duration_seconds={r.duration_seconds} />
-                        })};
+            <div className="row">
+                <div className="col-12">
+                    <div className="list-group">
+                        {historyData.map((r, i) => {
+                            var rs = byteSize(r.filesize);
+                            var sizeStr = rs.value + " " + rs.unit;
+                            return (<HistoryEntry key={"historyEntry_" + i} title={r.title} savedAs={r.file_format} fileSize={sizeStr}
+                                sourceUrl={r.source_url} duration_seconds={r.duration_seconds} />)
+                        })}
                     </div>
                 </div>
             </div>

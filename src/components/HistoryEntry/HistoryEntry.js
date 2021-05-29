@@ -16,14 +16,25 @@ export default class HistoryEntry extends React.Component {
 
     render() {
         return (
-            <a class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{this.props.title}</h5>
-                    <small>3 days ago</small>
+            <a className="list-group-item list-group-item-action flex-column align-items-start">
+                <div className="d-flex w-100 justify-content-between">
+                    <h6 className="mb-1">{this.props.title}</h6>
+                    <small>{this.props.savedAs}</small>
                 </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small>Donec id elit non mi porta.</small>
+                <div className="d-flex w-100 justify-content-between">
+                    <small>{this.props.fileSize}</small>
+                    <div>
+                        <button onClick={() => this.openExternal(this.props.sourceUrl)} type="button" className="btn btn-primary btn-sm">Source</button>
+                        <button onClick={() => this.openExternal(this.props.savePath)} type="button" className="btn btn-primary btn-sm m-1">Show in folder</button>
+                    </div>
+                </div>
             </a>
         )
     }
+
+    openExternal(thepath) {
+        require('electron').shell.openExternal(thepath);
+    }
+
+
 }
