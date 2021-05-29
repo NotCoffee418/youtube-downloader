@@ -57,6 +57,7 @@ export class Database {
                 `CREATE TABLE download_history (
                 id INTEGER PRIMARY KEY,
                 source_url TEXT NOT NULL,
+                save_path TEXT,
                 title TEXT NOT NULL,
                 duration_seconds INTEGER NOT NULL,
                 filesize INTEGER NOT NULL,
