@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import * as ReactDOM from 'react-dom';
-import 'jquery';
+import * as $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import components (individually? is this right?)
-import HistoryBox from './components/HistoryBox/HistoryBox'
-import DownloadBox from './components/DownloadBox/DownloadBox'
+import HistoryBox from './components/HistoryBox'
+import DownloadBox from './components/DownloadBox'
 
 function renderDownloadBox() {
     const element = <DownloadBox />;

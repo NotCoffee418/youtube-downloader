@@ -11,7 +11,7 @@ export class Helpers {
         var unixExtraPath = dirPath.replace("\\", "/");
 
         // Determine output dir by OS
-        var resultDir = process.env.APPDATA + "\\youtube-downloader\\" + winExtraPath + "\\" ||             // Windows
+        var resultDir = process.env.APPDATA + "\\youtube-downloader\\" + winExtraPath + "\\" ||         // Windows
             (process.platform == 'darwin' ?
                 process.env.HOME + '/Library/Preferences/youtube-downloader/' + unixExtraPath + "/" :   // Mac
                 process.env.HOME + "/.local/share/youtube-downloader/" + unixExtraPath + "/");          // Linux

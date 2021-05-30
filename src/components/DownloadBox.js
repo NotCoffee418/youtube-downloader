@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Settings } from '../../logic/settings'
+import { Settings } from '../logic/settings'
 
 export default class DownloadBox extends React.Component {
     constructor() {
@@ -10,7 +10,7 @@ export default class DownloadBox extends React.Component {
 
 
     render() {
-
+        return null;
     }
 
 }

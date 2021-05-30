@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import HistoryEntry from '../HistoryEntry/HistoryEntry'
-import { Database } from '../../logic/database'
+import HistoryEntry from './HistoryEntry'
+import { Database } from '../logic/database'
 
 export default class HistoryBox extends React.Component {
     constructor() {
