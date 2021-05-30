@@ -1,3 +1,5 @@
+import { Helpers } from './helpers'
+
 export class Database {
     constructor() {
         if (!Database.#is_installed) {
@@ -14,7 +16,7 @@ export class Database {
     open() {
         // Open DB if not open
         if (this.db == null || !this.db.open) {
-            this.db = require('better-sqlite3')('./client.db');
+            this.db = require('better-sqlite3')(Helpers.get_working_dir('', 'client.db'));
         }
     }
 
