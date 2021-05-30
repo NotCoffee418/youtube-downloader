@@ -34,7 +34,7 @@ export default class HistoryEntry extends React.Component {
                             </button>
                         ) : (
                             <button
-                                onClick={() => require('child_process').exec('start "" "' + this.props.saveDir + '"')}
+                                onClick={() => this.openDir(this.props.saveDir)}
                                 type="button"
                                 className="btn btn-primary btn-sm m-1">
                                 Show in folder
@@ -50,5 +50,8 @@ export default class HistoryEntry extends React.Component {
         require('electron').shell.openExternal(thepath);
     }
 
+    openDir(thepath) {
+        require('child_process').exec('start "" "' + thepath + '"')
+    }
 
 }
