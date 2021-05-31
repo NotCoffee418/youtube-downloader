@@ -1,5 +1,8 @@
 import { Helpers } from './helpers'
 
+const os = require('os');
+const path = require('path');
+
 export class Database {
     constructor() {
         if (!Database.#is_installed) {
@@ -29,6 +32,8 @@ export class Database {
         // skip if already checked version this session
         if (Database.#is_installed)
             return;
+
+
 
         // Checks if database has any version installed
         var installed_version = 0;
@@ -70,10 +75,27 @@ export class Database {
             this.update_database_version(1);
         }
         // install v2
-        if (installed_version == 1) {
+        if (installed_version <= 1) {
+            this.update_database_version(2);
 
-            //this.update_database_version(2);
+            // downloadpath_video
+            var videoDir = path.join(os.homedir(), "Videos");
+            this.create_setting("downloadpath_video", videoDir);
+
+            // downloadpath_audioonly
+            var musicDir = path.join(os.homedir(), "Music");
+            this.create_setting("downloadpath_audioonly", musicDir);
+
+            // enable_autodownload
+            this.create_setting("enable_autodownload", "false")
         }
+        // install v3
+        if (installed_version <= 2) {
+            //this.update_database_version(3);
+
+        }
+
+
 
         // Mark database as installed for the rest of the session
         Database.#is_installed = true;
@@ -82,4 +104,10 @@ export class Database {
     update_database_version(version) {
         this.db.prepare("UPDATE settings SET setting_value = ? WHERE setting_name = ?").run(version, "db_version");
     }
+
+    create_setting(name, value) {
+        this.db.prepare("INSERT INTO settings (setting_name, setting_value) VALUES (?, ?)")
+            .run(name, value);
+    }
+
 }
