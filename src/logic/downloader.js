@@ -20,7 +20,7 @@ export class Downloader {
             noCheckCertificate: true,
             preferFreeFormats: true,
             youtubeSkipDashManifest: true,
-            
+
         }).then(vData => {
             console.log(vData);
             // Download Thumbnail
@@ -28,17 +28,22 @@ export class Downloader {
 
             // Determine output path
             var savePath = "";
-            if (asDownloadType == Downloader.downloadType.VIDEO)
+            var format = "";
+            if (asDownloadType == Downloader.downloadType.VIDEO) {
                 savePath = path.join(Settings.get("downloadpath_video"), vData.title + ".mp4");
-            else if (asDownloadType == Downloader.downloadType.AUDIO_ONLY)
+                format = "MP4";
+            }
+            else if (asDownloadType == Downloader.downloadType.AUDIO_ONLY) {
                 savePath = path.join(Settings.get("downloadpath_audioonly"), vData.title + ".mp3");
+                format = "MP3";
+            }
             else console.error("downloader.addDownloadRequest failed due to invalid asDownloadType: " + asDownloadType)
 
 
             // Add request to database
-            //this.client.db.prepare(
-            //    "INSERT INTO download_history (source_url, save_path, title, duration_seconds, filesize, file_format) VALUES (?, ?, ?, ?, ?, ?);")
-            //    .run(url, savePath, vData.title, vData.duration, ,);
+            this.client.db.prepare(
+                "INSERT INTO download_history (source_url, save_path, title, duration_seconds, file_format) VALUES (?, ?, ?, ?, ?, ?, ?);")
+                .run(url, savePath, vData.title, vData.duration, format);
 
             // Display in HistoryBox
         });

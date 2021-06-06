@@ -33,7 +33,9 @@ export class Database {
         if (Database.#is_installed)
             return;
 
-
+        // Mark database as installed for the rest of the session
+        Database.#is_installed = true;
+        console.log("Installing database...");
 
         // Checks if database has any version installed
         var installed_version = 0;
@@ -68,7 +70,8 @@ export class Database {
                 title TEXT NOT NULL,
                 duration_seconds INTEGER NOT NULL,
                 filesize INTEGER NOT NULL,
-                file_format TEXT NOT NULL
+                file_format TEXT NOT NULL,
+                is_complete INTEGER NOT NULL DEFAULT 0
              );`).run();
 
             // report version updated
@@ -94,11 +97,6 @@ export class Database {
             //this.update_database_version(3);
 
         }
-
-
-
-        // Mark database as installed for the rest of the session
-        Database.#is_installed = true;
     }
 
     update_database_version(version) {
