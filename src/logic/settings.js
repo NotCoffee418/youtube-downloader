@@ -36,7 +36,6 @@ export class Settings {
     static set(setting_name, setting_value) {
         // determine if setting already exists
         var isExistingSetting = this.has_key(setting_name);
-        console.log(isExistingSetting)
 
         var client = new Database();
         client.open();

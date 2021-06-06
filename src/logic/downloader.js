@@ -41,9 +41,11 @@ export class Downloader {
 
 
             // Add request to database
+            this.client.open();
             this.client.db.prepare(
-                "INSERT INTO download_history (source_url, save_path, title, duration_seconds, file_format) VALUES (?, ?, ?, ?, ?, ?, ?);")
+                "INSERT INTO download_history (source_url, save_path, title, duration_seconds, file_format) VALUES (?, ?, ?, ?, ?);")
                 .run(url, savePath, vData.title, vData.duration, format);
+            this.client.close();
 
             // Display in HistoryBox
         });

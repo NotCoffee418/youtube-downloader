@@ -33,10 +33,6 @@ export class Database {
         if (Database.#is_installed)
             return;
 
-        // Mark database as installed for the rest of the session
-        Database.#is_installed = true;
-        console.log("Installing database...");
-
         // Checks if database has any version installed
         var installed_version = 0;
         var has_done_first_run = this.db.prepare(
@@ -69,7 +65,7 @@ export class Database {
                 save_path TEXT,
                 title TEXT NOT NULL,
                 duration_seconds INTEGER NOT NULL,
-                filesize INTEGER NOT NULL,
+                filesize INTEGER,
                 file_format TEXT NOT NULL,
                 is_complete INTEGER NOT NULL DEFAULT 0
              );`).run();
@@ -97,10 +93,15 @@ export class Database {
             //this.update_database_version(3);
 
         }
+
+
+        // Mark database as installed for the rest of the session
+        Database.#is_installed = true;
     }
 
     update_database_version(version) {
-        this.db.prepare("UPDATE settings SET setting_value = ? WHERE setting_name = ?").run(version, "db_version");
+        this.db.prepare("UPDATE settings SET setting_value = ? WHERE setting_name = ?")
+            .run(version, "db_version");
     }
 
     create_setting(name, value) {
