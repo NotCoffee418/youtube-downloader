@@ -11,9 +11,9 @@ export class Downloader {
         AUDIO_ONLY: 1
     }
 
-    addDownloadRequest(url, asDownloadType) {
+    async addDownloadRequest(url, asDownloadType) {
         // Get video data
-        youtubedl(url, {
+        let vData = await youtubedl(url, {
             dumpSingleJson: true,
             noWarnings: true,
             noCallHome: true,
@@ -21,35 +21,33 @@ export class Downloader {
             preferFreeFormats: true,
             youtubeSkipDashManifest: true,
 
-        }).then(vData => {
-            console.log(vData);
-            // Download Thumbnail
-            var thumbUrl = vData.thumbnails[0].url;
-
-            // Determine output path
-            var savePath = "";
-            var format = "";
-            if (asDownloadType == Downloader.downloadType.VIDEO) {
-                savePath = path.join(Settings.get("downloadpath_video"), vData.title + ".mp4");
-                format = "MP4";
-            }
-            else if (asDownloadType == Downloader.downloadType.AUDIO_ONLY) {
-                savePath = path.join(Settings.get("downloadpath_audioonly"), vData.title + ".mp3");
-                format = "MP3";
-            }
-            else console.error("downloader.addDownloadRequest failed due to invalid asDownloadType: " + asDownloadType)
-
-
-            // Add request to database
-            this.client.open();
-            this.client.db.prepare(
-                "INSERT INTO download_history (source_url, save_path, title, duration_seconds, file_format) VALUES (?, ?, ?, ?, ?);")
-                .run(url, savePath, vData.title, vData.duration, format);
-            this.client.close();
-
-            // Display in HistoryBox
         });
 
+        console.log(vData);
+        // Download Thumbnail
+        var thumbUrl = vData.thumbnails[0].url;
+
+        // Determine output path
+        var savePath = "";
+        var format = "";
+        if (asDownloadType == Downloader.downloadType.VIDEO) {
+            savePath = path.join(Settings.get("downloadpath_video"), vData.title + ".mp4");
+            format = "MP4";
+        }
+        else if (asDownloadType == Downloader.downloadType.AUDIO_ONLY) {
+            savePath = path.join(Settings.get("downloadpath_audioonly"), vData.title + ".mp3");
+            format = "MP3";
+        }
+        else console.error("downloader.addDownloadRequest failed due to invalid asDownloadType: " + asDownloadType)
+
+        // Add request to database
+        this.client.open();
+        this.client.db.prepare(
+            "INSERT INTO download_history (source_url, save_path, title, duration_seconds, file_format) VALUES (?, ?, ?, ?, ?);")
+            .run(url, savePath, vData.title, vData.duration, format);
+        this.client.close();
+
+        // todo: Send request to youtube-dl
     }
 
     getOutputDir(format) {
